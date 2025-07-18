@@ -1,138 +1,315 @@
 #include <iostream.h>
 #include <conio.h>
+#include <stdlib.h>
 
-void traverse(int arr[], int n) {
-    int i;
+class ArrayManager {
+private:
+    int arr[100];   // Main array
+    int n;          // Number of elements
+    int i;          // Loop variable
+
+public:
+    void getData();
+    void traverse();
+    void insert();
+    void deleteElement();
+    void sortArray();
+    void linearSearch();
+    void binarySearch();
+    void mergeArrays();
+    void sortedMerge();
+    void copyArray();
+    void splitArray();
+};
+
+// Function to input data
+void ArrayManager::getData() {
+    cout << "Enter number of elements: ";
+    cin >> n;
+    cout << "Enter elements:\n";
+    for (i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+}
+
+// Traverse and display the array
+void ArrayManager::traverse() {
     cout << "Array elements:\n";
     for (i = 0; i < n; i++) {
-	cout << arr[i] << " ";
+        cout << arr[i] << " ";
     }
     cout << "\n";
 }
-void searching(int arr[],int n){
-	int e,i;
-	cout << "Enter the element Your want to search";
-	cin >> e;
-	for (i=0; i<n; i++) {
-	    if ( arr[i] == e ) {
-		cout << "Your entered element "<< e <<" is present on"<< i << "location in array\n";
-	     }
-	   else
-		cout << "Your element is not "<< e <<" in array\n";
 
-	}
-}
-void insert(int arr[], int &n) {
-    int pos, val, i;
+// Insert an element at given position
+void ArrayManager::insert() {
+    int pos, val;
     cout << "Enter position to insert (0 to " << n << "): ";
     cin >> pos;
     if (pos < 0 || pos > n) {
-	cout << "Invalid position!\n";
-	return;
+        cout << "Invalid position!\n";
+        return;
     }
     cout << "Enter value to insert: ";
     cin >> val;
     for (i = n; i > pos; i--) {
-	arr[i] = arr[i - 1];
+        arr[i] = arr[i - 1];
     }
     arr[pos] = val;
     n++;
     cout << "Element inserted.\n";
 }
 
-void deleteElement(int arr[], int &n) {
-    int pos, i;
+// Delete element at a position
+void ArrayManager::deleteElement() {
+    int pos;
     cout << "Enter position to delete (0 to " << n - 1 << "): ";
     cin >> pos;
     if (pos < 0 || pos >= n) {
-	cout << "Invalid position!\n";
-	return;
+        cout << "Invalid position!\n";
+        return;
     }
     for (i = pos; i < n - 1; i++) {
-	arr[i] = arr[i + 1];
+        arr[i] = arr[i + 1];
     }
     n--;
     cout << "Element deleted.\n";
 }
 
-void sortArray(int arr[], int n) {
-    int i, j, temp;
+// Bubble sort the array
+void ArrayManager::sortArray() {
+    int j, temp;
     for (i = 0; i < n - 1; i++) {
-	for (j = 0; j < n - i - 1; j++) {
-	    if (arr[j] > arr[j + 1]) {
-		temp = arr[j];
-		arr[j] = arr[j + 1];
-		arr[j + 1] = temp;
-	    }
-	}
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
     }
     cout << "Array sorted.\n";
 }
 
-void mergeArrays(int arr[], int &n) {
-    int arr2[50], n2, i;
+// Linear Search
+void ArrayManager::linearSearch() {
+    int val, found = 0;
+    cout << "Enter element to search: ";
+    cin >> val;
+    for (i = 0; i < n; i++) {
+        if (arr[i] == val) {
+            cout << "Element found at index " << i << "\n";
+            found = 1;
+        }
+    }
+    if (!found)
+        cout << "Element not found.\n";
+}
+
+// Binary Search (requires sorted array)
+void ArrayManager::binarySearch() {
+    int val, start = 0, end = n - 1, mid;
+    cout << "Enter element to search (Array must be sorted): ";
+    cin >> val;
+    while (start <= end) {
+        mid = (start + end) / 2;
+        if (arr[mid] == val) {
+            cout << "Element found at index " << mid << "\n";
+            return;
+        } else if (arr[mid] < val)
+            start = mid + 1;
+        else
+            end = mid - 1;
+    }
+    cout << "Element not found.\n";
+}
+
+// Merge another array with the current array (Normal)
+void ArrayManager::mergeArrays() {
+    int arr2[50], n2;
     cout << "Enter number of elements in second array: ";
     cin >> n2;
-    if (n + n2 > 100) {
-	cout << "Merging would exceed array limit.\n";
-	return;
-    }
     cout << "Enter elements of second array:\n";
     for (i = 0; i < n2; i++) {
-	cin >> arr2[i];
+        cin >> arr2[i];
     }
     for (i = 0; i < n2; i++) {
-	arr[n] = arr2[i];
-	n++;
+        arr[n] = arr2[i];
+        n++;
     }
     cout << "Arrays merged.\n";
 }
 
+// Merge and sort both arrays
+void ArrayManager::sortedMerge() {
+    int arr2[50], n2, j, k;
+    cout << "Enter number of elements in second array: ";
+    cin >> n2;
+    cout << "Enter elements of second array:\n";
+    for (i = 0; i < n2; i++) {
+        cin >> arr2[i];
+    }
+
+    sortArray(); // Sort main array
+
+    // Sort second array
+    for (i = 0; i < n2 - 1; i++) {
+        for (j = 0; j < n2 - i - 1; j++) {
+            if (arr2[j] > arr2[j + 1]) {
+                int temp = arr2[j];
+                arr2[j] = arr2[j + 1];
+                arr2[j + 1] = temp;
+            }
+        }
+    }
+
+    int merged[100];
+    i = 0; j = 0; k = 0;
+    while (i < n && j < n2) {
+        if (arr[i] < arr2[j])
+            merged[k++] = arr[i++];
+        else
+            merged[k++] = arr2[j++];
+    }
+    while (i < n) merged[k++] = arr[i++];
+    while (j < n2) merged[k++] = arr2[j++];
+
+    for (i = 0; i < k; i++)
+        arr[i] = merged[i];
+    n = k;
+
+    cout << "Sorted arrays merged.\n";
+}
+
+// Copy array to a new one
+void ArrayManager::copyArray() {
+    int copy[100];
+    for (i = 0; i < n; i++) {
+        copy[i] = arr[i];
+    }
+    cout << "Copied Array:\n";
+    for (i = 0; i < n; i++) {
+        cout << copy[i] << " ";
+    }
+    cout << "\n";
+}
+
+// Split array at given position
+void ArrayManager::splitArray() {
+    int pos;
+    cout << "Enter position to split array: ";
+    cin >> pos;
+    if (pos < 0 || pos > n) {
+        cout << "Invalid position.\n";
+        return;
+    }
+    cout << "First Sub-array:\n";
+    for (i = 0; i < pos; i++)
+        cout << arr[i] << " ";
+    cout << "\nSecond Sub-array:\n";
+    for (i = pos; i < n; i++)
+        cout << arr[i] << " ";
+    cout << "\n";
+}
+
+// Main function with switch inside switch
 void main() {
     clrscr();
-    int arr[100], n, choice;
-    cout << "Enter number of elements: ";
-    cin >> n;
-    cout << "Enter elements:\n";
-    for (int i = 0; i < n; i++) {
-	cin >> arr[i];
-    }
+    ArrayManager obj;
+    int choice;
+
+    obj.getData();
+
     do {
-	cout << "\n--- MENU ---\n";
-	cout << "1. Traverse\n";
-	cout << "2. Insert\n";
-	cout << "3. Delete\n";
-	cout << "4. Sort\n";
-	cout << "5. Merge\n";
-	cout << "6. Searching\n";
-	cout << "7. Exit\n";
-	cout << "Enter your choice: ";
-	cin >> choice;
-	switch (choice) {
-	    case 1:
-		traverse(arr, n);
-		break;
-	    case 2:
-		insert(arr, n);
-		break;
-	    case 3:
-		deleteElement(arr, n);
-		break;
-	    case 4:
-		sortArray(arr, n);
-		break;
-	    case 5:
-		mergeArrays(arr, n);
-		break;
-	    case 6:
-		searching(arr,n);
-		break;
-	    case 7:
-		cout << "Exiting...\n";
-		break;
-	    default:
-		cout << "Invalid choice!\n";
-	}
-    } while (choice != 7);
+        cout << "\n--- MAIN MENU ---\n";
+        cout << "1. Traverse\n";
+        cout << "2. Insert\n";
+        cout << "3. Delete\n";
+        cout << "4. Sort\n";
+        cout << "5. Merge (Normal / Sorted)\n";
+        cout << "6. Search (Linear / Binary)\n";
+        cout << "7. Copy\n";
+        cout << "8. Split\n";
+        cout << "9. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                obj.traverse();
+                break;
+
+            case 2:
+                obj.insert();
+                break;
+
+            case 3:
+                obj.deleteElement();
+                break;
+
+            case 4:
+                obj.sortArray();
+                break;
+
+            case 5: {
+                int mergeChoice;
+                cout << "\n--- MERGE MENU ---\n";
+                cout << "1. Normal Merge\n";
+                cout << "2. Sorted Merge\n";
+                cout << "Enter your choice: ";
+                cin >> mergeChoice;
+
+                switch (mergeChoice) {
+                    case 1:
+                        obj.mergeArrays();
+                        break;
+                    case 2:
+                        obj.sortedMerge();
+                        break;
+                    default:
+                        cout << "Invalid merge option!\n";
+                }
+                break;
+            }
+
+            case 6: {
+                int searchChoice;
+                cout << "\n--- SEARCH MENU ---\n";
+                cout << "1. Linear Search\n";
+                cout << "2. Binary Search\n";
+                cout << "Enter your choice: ";
+                cin >> searchChoice;
+
+                switch (searchChoice) {
+                    case 1:
+                        obj.linearSearch();
+                        break;
+                    case 2:
+                        obj.binarySearch();
+                        break;
+                    default:
+                        cout << "Invalid search option!\n";
+                }
+                break;
+            }
+
+            case 7:
+                obj.copyArray();
+                break;
+
+            case 8:
+                obj.splitArray();
+                break;
+
+            case 9:
+                cout << "Exiting...\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 9);
+
     getch();
 }
