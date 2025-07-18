@@ -1,0 +1,86 @@
+#include <iostream.h>
+#include <conio.h>
+#include <stdlib.h>
+
+class Stack {
+public:
+    int arr[6];
+    int top;
+    int SIZE;
+    int value;
+
+    Stack(){
+	top=-1;
+	SIZE=4;
+    }
+
+    void push(){
+	if(top>=SIZE-1){
+		cout<<"Stack Overflow"<<endl;
+	}
+	else{
+		top++;
+		cout<<"Enter the Element: ";
+		cin>>value;
+		arr[top]=value;
+		cout<<"Push value is : "<<value<<endl;
+	}
+    }
+
+    void pop(){
+	if(top<0){
+		cout<<"Stack Underflow";
+	}
+	else{
+
+		cout<< arr[top] << " popped from the Stack.\n";
+		top--;
+	}
+
+    }
+
+
+    void display() {
+	if (top < 0) {
+	    cout << "Stack is empty\n";
+	} else {
+	    cout << "Stack elements:\n";
+	    for (int i = top; i >= 0; i--) {
+		cout << arr[i] << "\n";
+	    }
+	}
+    }
+};
+
+int main() {
+    clrscr();
+    Stack s;
+    int choice, val;
+
+
+    while(1){
+	cout << "\n1.Push\n2.Pop\n3.Display\n4.Exit\n";
+	cout << "Enter your choice: ";
+	cin >> choice;
+
+	switch (choice) {
+	case 1:
+	    s.push();
+	    break;
+	case 2:
+	    s.pop();
+	    break;
+	case 3:
+	    s.display();
+	    break;
+	case 4:
+	    exit(0);
+	    break;
+	default:
+	    cout << "Invalid Choice!";
+	}
+    }
+
+    getch();
+    return 0;
+}
