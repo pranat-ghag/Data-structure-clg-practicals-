@@ -1,0 +1,139 @@
+#include<iostream.h>
+#include<stdlib.h>
+#include<conio.h>
+class dqueue{
+public:
+	int arr[5],i,front,rear,size;
+	dqueue(){
+	    front=-1;
+	    size=5;
+	    rear=-1;
+
+	}
+	void inputrear(){
+	   if (rear<size-1){
+	      rear++;
+	      cout<<"Enter the element you want to enter in queue:";
+	      cin>>arr[rear];
+	      cout<<"Element "<<arr[rear]<<" is added in queue from rear";
+	   }
+	   else{
+		cout<<"Queue is full";
+	   }
+	}
+       void inputfront(){
+	  if(front>=0){
+	    cout<<"Enter the  Element you want to insert:";
+	    cin>>arr[front];
+	    front--;
+	  }
+	  else{
+	    cout<<"\nNo space in Queue!";
+	  }
+       }
+
+
+	void delrear(){
+	    if(front==rear){
+	       cout<<"The queue is empty\n";
+	     }
+	     else{
+	       cout<<arr[front]<<" is delete from Rear.\n";
+	       rear--;
+	       }
+	}
+	void delfront(){
+	  if(rear==0||front==rear){
+	    cout<<"The queue is empty\n";
+	    }
+	  else{
+		front++;
+		cout<<arr[front]<<" is deleted from front.\n";
+
+	  }
+	}
+		void display(){
+	  cout<<"Queue:";
+	  for(i=front+1;i<=rear;i++){
+	    cout<<arr[i]<<"\t";
+	  }
+	}
+};
+	void main(){
+	   clrscr();
+	   int option;
+	   dqueue DQ;
+	  while(1){
+	     cout<<"\n------Main Menu-------\n";
+	     cout<<"1.Display the Queue\n";
+	     cout<<"2.Input restrickted.  (Inputrear/delfront/delrear)\n";
+	     cout<<"3.Outpur restrickted. (Inputrear/Inputfront/delFront)\n";
+	     cout<<"4.Exit\n";
+	     cout<<"Enter your choice:";
+	     cin>>option;
+
+	     switch(option){
+
+		case 1:
+		     DQ.display();
+		     break;
+
+		case 2:{
+		   int inputres;
+		   cout<<"\n----Input restrickted Menu----\n";
+		   cout<<"1.Inputrear\n";
+		   cout<<"2.Deleterear\n";
+		   cout<<"3.Deletefront\n";
+		   cout<<"Enter your choice for Input restrickted Menu: ";
+		   cin>>inputres;
+		   switch (inputres){
+		      case 1:
+			  DQ.inputrear();
+			  break;
+		      case 2:
+			  DQ.delrear();
+			  break;
+		      case 3:
+			  DQ.delfront();
+			  break;
+		      default:
+			 cout<<"Invalid choice Input Restricked Menu\n";
+		}
+		break;
+		}
+		case 3:{
+		   int Outputres;
+		      cout<<"\n----OutRestrickted restrickted Menu----\n";
+		      cout<<"1.InputFront\n";
+		      cout<<"2.Inputrear\n";
+		      cout<<"3.Deletefront\n";
+		       cout<<"Enter your choice for Output restrickted Menu: ";
+		      cin>>Outputres;
+		   switch (Outputres){
+		      case 1:
+			  DQ.inputfront();
+			  break;
+		      case 2:
+			  DQ.inputrear();
+			  break;
+		      case 3:
+			  DQ.delfront();
+			  break;
+		      default:
+			cout<<"Invalid choice in Output restricked menu\n";
+		    }
+		break;
+		   }
+		case 4:{
+		    cout<<"Exiting....\n";
+		    exit(0);
+		    break;
+		}
+		default:
+		   cout<<"Invaild choice!\n";
+	      }
+	  }
+	getch();
+    }
+
+
