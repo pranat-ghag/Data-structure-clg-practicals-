@@ -1,0 +1,72 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+class linklist
+{
+    struct Node {
+	int info;
+	struct Node *next;
+    }*ptr,*newnode,*head;
+    public:
+  linklist()
+  {
+   head = NULL;
+  }
+void insert() {
+   int data;
+   cout<<"Enter the value to insert: ";
+   cin>>data;
+   newnode = new Node();
+   newnode->info = data;
+   newnode->next = head;
+   head = newnode;
+}
+void del()
+{
+    int item;
+    cout<<"Enter the element you want to delete:";
+    cin>>item;
+    item=head->info;
+    cout<<endl<<item<<"deleted"<<endl;
+    ptr=head;
+    head=head->next;
+    delete(ptr);
+}
+void display() {
+     ptr = head;
+   while (ptr != NULL) {
+      cout<<ptr->info<<" ";
+      ptr = ptr->next;
+   }
+}
+};
+int main() {
+	clrscr();
+	int option;
+	linklist l;
+
+     while (1){
+     cout<<"\n----Main Menu----";
+     cout<<"1.Insert\n";
+     cout<<"2.Delete\n";
+     cout<<"3.Display\n";
+     cout<<"Enter the option: ";
+     switch(option){
+	 case 1:
+	 l.insert();
+	 break;
+
+	 case 2:
+	 l.del();
+	 break;
+
+	 case 3:
+	 l.display();
+	 break;
+
+	 default:
+	 cout<<"Invaild choice!!\n";
+     }
+   return 0;
+}
+}
