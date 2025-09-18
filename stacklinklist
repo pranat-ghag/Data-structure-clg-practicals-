@@ -1,0 +1,82 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+class stackLink{
+struct Node{
+	int info;
+	Node *next;
+}  *top,*ptr,*neww,*temp;
+public:
+int data;
+stackLink(){
+top=NULL;
+}
+void push(){
+  cout<<"Enter The data To be inserted in the Node : ";
+  cin>>data;
+ neww = new Node;
+  neww -> info = data;
+  neww -> next = NULL;
+  neww -> next = top;
+  top = neww;
+  }
+void pop(){
+ if(top == NULL){
+ cout<<"Node not containing any data , UNDERFLOW  .. ";
+ } else{
+ data=top->info;
+ cout<<data<<" is deleted.."<<endl;
+ temp= top;
+ top = top->next;
+ delete(temp);
+ }
+}
+void display(){
+ptr=top;
+while(ptr!=NULL){
+data=ptr->info;
+cout<<data<<" ";
+ptr = ptr -> next;
+}
+}
+};
+int main() {
+	clrscr();
+	stackLink l;
+	int choice;
+	while(1) {
+		cout<<"------------Menu------------\n";
+		cout<<"1. insert \n2.delete \n3. display \n4.exit \n";
+		cout<<"------------------\n";
+		cout<<"enter your choice";
+		cin>>choice;
+		switch(choice){
+		case 1:
+		l.push();
+		break;
+
+		case 2:
+		l.pop();
+		break;
+
+		case 3:
+		l.display();
+		break;
+
+		case 4:
+		exit(0);
+		break;
+
+
+		default:
+		cout<<"Invalid option..";
+		break;
+
+	}
+	}
+	getch();
+	return 0;
+
+}
+
+
