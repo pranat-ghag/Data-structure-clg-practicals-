@@ -1,0 +1,79 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+class queueLink{
+struct Node{
+	int info;
+	Node *next;
+}  *head,*ptr,*neww,*temp,*front,*rear;
+public:
+int data;
+stackLink(){
+front = NULL;
+rear = NULL;
+}
+void insert(){
+  cout<<"Enter The data To be inserted in the Node : ";
+  cin>>data;
+  neww = new Node;
+  neww -> info = data;
+  neww -> next = NULL;
+  rear = neww;
+  }
+void del(){
+ if(rear == NULL){
+ cout<<"Node not containing any data , UNDERFLOW  .. ";
+ } else{
+ front = front -> next;
+ cout<<front -> info<<" is deleted..\n"<<endl;
+ temp = front;
+ delete(temp);
+ }
+}
+void display(){
+ptr=front;
+while(ptr!=NULL){
+data=ptr->info;
+cout<<ptr->info<<" ";
+ptr = ptr -> next;
+}
+}
+};
+int main() {
+	clrscr();
+	queueLink l;
+	int choice;
+	while(1) {
+		cout<<"------------Menu------------\n";
+		cout<<"1. insert \n2.delete \n3. display \n4.exit \n";
+		cout<<"------------------\n";
+		cout<<"enter your choice";
+		cin>>choice;
+		switch(choice){
+		case 1:
+		l.insert();
+		break;
+
+		case 2:
+		l.del();
+		break;
+
+		case 3:
+		l.display();
+		break;
+
+		case 4:
+		exit(0);
+		break;
+
+
+		default:
+		cout<<"Invalid option..";
+		break;
+
+	}
+	}
+	getch();
+	return 0;
+
+}
